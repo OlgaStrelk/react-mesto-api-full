@@ -1,3 +1,5 @@
+import BASE_URL from './consts'
+
 class Api {
   constructor({ baseUrl, headers }) {
     this._headers = headers;
@@ -63,7 +65,7 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-39",
+  baseUrl: BASE_URL,
   headers: {
     authorization: "78099c83-b4f6-4327-beb7-a0fa8f52d200",
     "Content-Type": "application/json",
