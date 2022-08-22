@@ -1,0 +1,3 @@
+[submodule "express-mesto-gha"]
+	path = express-mesto-gha
+	url = https://github.com/OlgaStrelk/express-mesto-gha

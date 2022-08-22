@@ -12,23 +12,14 @@ module.exports.createUser = (req, res, next) => {
   const {
     name, about, avatar, email, password,
   } = req.body;
-  bcrypt
-    .hash(password, SAULT_ROUNDS)
+  bcrypt.hash(password, SAULT_ROUNDS)
     .then((hash) => User.create({
-      name,
-      about,
-      avatar,
-      email,
-      password: hash,
+      name, about, avatar, email, password: hash,
     }))
     .then((user) => {
       res.status(201).send({
         data: {
-          name: user.name,
-          about: user.about,
-          avatar: user.avatar,
-          email: user.email,
-          _id: user._id,
+          name: user.name, about: user.about, avatar: user.avatar, email: user.email, _id: user._id,
         },
       });
     })
@@ -47,10 +38,10 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       const token = generateToken({ _id: user._id });
       res
-        // .cookie('jwt', token, {
-        //   maxAge: 3600000 * 7,
-        //   httpOnly: true,
-        // })
+        .cookie('jwt', token, {
+          maxAge: 3600000 * 7,
+          httpOnly: true,
+        })
         .send({ token });
     })
     .catch(next);
