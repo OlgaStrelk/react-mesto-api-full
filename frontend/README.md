@@ -1,4 +1,4 @@
-# Проект: Место
+# Фронтенд проекта Место
  интерактивная страница, куда можно добавлять фотографии, удалять их и ставить лайки.
 ##### scroll down for english version
 ### Обзор
@@ -36,7 +36,7 @@
 https://olgastrelk.github.io/mesto-react/
 
 
-# Project: Mesto
+# Frontend for Mesto
  an interactive single page application bootstrapped with [Create React App](https://github.com/facebook/create-react-app) where you can add photos, delete them and like them.
 
 ### Review
