@@ -1,4 +1,4 @@
-  import { BASE_URL } from './consts'
+import { BASE_URL } from "./consts";
 
 class Api {
   constructor({ baseUrl, headers }) {
@@ -8,13 +8,19 @@ class Api {
 
   getProfile() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
     }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
   }
 
-  getInitialCards() {
+  getCards() {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
     }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
   }
 
@@ -67,7 +73,6 @@ class Api {
 export const api = new Api({
   baseUrl: BASE_URL,
   headers: {
-    authorization: "78099c83-b4f6-4327-beb7-a0fa8f52d200",
     "Content-Type": "application/json",
   },
 });

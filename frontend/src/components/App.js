@@ -33,27 +33,14 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      api
-        .getProfile()
-        .then((data) => {
-          setCurrentUser(data);
+      Promise.all([api.getProfile(), api.getCards()])
+        .then(([user, cards]) => {
+          setCurrentUser(user);
+          setCards(cards);
         })
 
         .catch((err) =>
-          console.log(`При загрузке данных пользователя: ${err}`)
-        );
-    }
-  }, [isLoggedIn]);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      api
-        .getInitialCards()
-        .then((data) => {
-          setCards(data);
-        })
-        .catch((err) =>
-          console.log(`При загрузке первоначального массива карточек: ${err}`)
+          console.log(`При загрузке данных: ${err}`)
         );
     }
   }, [isLoggedIn]);
