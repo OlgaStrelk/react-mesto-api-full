@@ -37,12 +37,7 @@ module.exports.login = (req, res, next) => {
   User.findUserByCredentials(email, password)
     .then((user) => {
       const token = generateToken({ _id: user._id });
-      res
-        .cookie('jwt', token, {
-          maxAge: 3600000 * 7,
-          httpOnly: true,
-        })
-        .send({ token });
+      res.send({ token });
     })
     .catch(next);
 };
