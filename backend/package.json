@@ -2,7 +2,7 @@
   "name": "mesto-server",
   "version": "1.0.0",
   "description": "бекэнд интерактивной страницы с авторизацией",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
@@ -22,7 +22,6 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
     "celebrate": "^15.0.1",
-    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",

@@ -3,8 +3,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-// const helmet = require('helmet');
-const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const cors = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -24,8 +22,6 @@ db.once('open', console.log.bind(console, 'connection with db is set'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(cookieParser());
-// app.use(helmet());
 app.use(requestLogger);
 
 app.get('/crash-test', () => {
