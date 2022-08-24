@@ -30,13 +30,13 @@ function App() {
   const [tooltipStatus, setTooltipStatus] = useState();
   const [email, setEmail] = useState("");
   const history = useHistory();
-
+  
   useEffect(() => {
     if (isLoggedIn) {
       Promise.all([api.getProfile(), api.getCards()])
-        .then(([user, cards]) => {
-          setCurrentUser(user);
-          setCards(cards);
+        .then(([user, initialCards]) => {
+          setCurrentUser(user.data);
+          setCards(initialCards.data);
         })
 
         .catch((err) =>

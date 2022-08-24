@@ -6,6 +6,6 @@ const generateToken = (payload) => jwt.sign(payload, NODE_ENV === 'production' ?
   expiresIn: '7d',
 });
 
-const checkToken = (token) => jwt.verify(token, JWT_SECRET);
+const checkToken = (token) => jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
 
 module.exports = { generateToken, checkToken };
