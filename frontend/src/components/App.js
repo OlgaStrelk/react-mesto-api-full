@@ -30,7 +30,9 @@ function App() {
   const [tooltipStatus, setTooltipStatus] = useState();
   const [email, setEmail] = useState("");
   const history = useHistory();
-  
+  useEffect(() => {
+    console.log(cards)
+  }, [cards])
   useEffect(() => {
     if (isLoggedIn) {
       Promise.all([api.getProfile(), api.getCards()])
@@ -65,8 +67,8 @@ function App() {
   const handleUpdateUser = (userUpdate) => {
     api
       .editProfile(userUpdate.name, userUpdate.about)
-      .then((newData) => {
-        setCurrentUser(newData);
+      .then((newUserData) => {
+        setCurrentUser(newUserData.data);
       })
       .catch((err) =>
         console.log(`При обновлении информации о пользователе: ${err}`)
@@ -78,7 +80,7 @@ function App() {
     api
       .changeUserPic(avatar)
       .then((newAvatar) => {
-        setCurrentUser(newAvatar);
+        setCurrentUser(newAvatar.data);
       })
       .catch((err) =>
         console.log(`При обновлении аватара пользователя: ${err}`)
@@ -90,7 +92,7 @@ function App() {
     api
       .addCard(name, link)
       .then((newCard) => {
-        setCards([newCard, ...cards]);
+        setCards([newCard.data, ...cards]);
       })
       .catch((err) => console.log(`При добавлении новой карточки: ${err}`))
       .then(() => closeAllPopups());
@@ -117,16 +119,16 @@ function App() {
   };
 
   const handleCardLike = (card) => {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
     api
       .changeLikeCardStatus(card._id, !isLiked)
-      .then((newCard) => {
-        setCards((state) =>
-          state.map((c) => (c._id === card._id ? newCard : c))
-        );
-      })
+      .then(newCard => {
+        setCards(state => state.map(c => c._id === card._id ? newCard.card : c));
+    })
       .catch((err) => console.log(`При изменении состояния лайка: ${err}`));
   };
+
+
 
   const handleCardDeleteRequest = (card) => {
     setCardDelete(card);

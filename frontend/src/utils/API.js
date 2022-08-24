@@ -46,8 +46,9 @@ class Api {
       headers: this._headers,
     }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
   }
-  changeLikeCardStatus(cardID, like) {
-    return fetch(`${this._baseUrl}/cards/${cardID}/likes`, {
+
+  changeLikeCardStatus(cardId, like) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: like ? "PUT" : "DELETE",
       headers: this._headers,
     }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));

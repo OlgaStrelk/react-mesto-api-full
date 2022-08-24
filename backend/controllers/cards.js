@@ -55,7 +55,7 @@ module.exports.likeCard = (req, res, next) => {
       if (!card) {
         next(new NotFoundError('Передан несуществующий id карточки.'));
       } else {
-        res.send({ data: card });
+        res.send({ card });
       }
     })
     .catch((err) => {
@@ -79,7 +79,7 @@ module.exports.dislikeCard = (req, res, next) => {
       if (!card) {
         next(new NotFoundError('Передан несуществующий id карточки.'));
       } else {
-        res.send({ data: card });
+        res.send({ card });
       }
     })
     .catch((err) => {
