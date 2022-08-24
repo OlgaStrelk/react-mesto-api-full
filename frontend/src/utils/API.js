@@ -8,19 +8,13 @@ class Api {
 
   getProfile() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: {
-        ...this._headers,
-        authorization: `Bearer ${localStorage.getItem("jwt")}`,
-      },
+      headers: this._headers,
     }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
   }
 
   getCards() {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: {
-        ...this._headers,
-        authorization: `Bearer ${localStorage.getItem("jwt")}`,
-      },
+      headers: this._headers,
     }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
   }
 
@@ -74,5 +68,6 @@ export const api = new Api({
   baseUrl: BASE_URL,
   headers: {
     "Content-Type": "application/json",
+    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
   },
 });

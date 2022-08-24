@@ -1,4 +1,5 @@
 import { BASE_URL } from './consts'
+
 export const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
@@ -9,6 +10,7 @@ export const register = (email, password) => {
     body: JSON.stringify({ email, password }),
   }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
 };
+
 export const authorize = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: "POST",
@@ -24,6 +26,7 @@ export const authorize = (email, password) => {
       return data;
     });
 };
+
 export const checkToken = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
