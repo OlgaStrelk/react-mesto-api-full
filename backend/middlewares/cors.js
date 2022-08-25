@@ -2,6 +2,9 @@ const allowedCors = [
   'http://mesto.site.strelod.nomoredomains.sbs',
   'https://api.mesto.site.strelod.nomoredomains.sbs',
   'http://localhost:3000',
+  // проверка причин ошибки корсов
+  'https://mesto.site.strelod.nomoredomains.sbs',
+  'https://api.mesto.site.strelod.nomoredomains.sbs',
 ];
 
 const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
@@ -18,6 +21,7 @@ module.exports = (req, res, next) => {
       res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
       res.header('Access-Control-Allow-Headers', requestHeaders);
       res.end();
+      return;
     }
   }
   next();

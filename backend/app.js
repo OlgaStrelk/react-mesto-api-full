@@ -1,6 +1,8 @@
-require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+
+require('dotenv').config();
+
 const bodyParser = require('body-parser');
 
 const { errors } = require('celebrate');
@@ -10,6 +12,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
+app.use(requestLogger);
 
 app.use(cors);
 
@@ -22,8 +25,6 @@ db.once('open', console.log.bind(console, 'connection with db is set'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(requestLogger);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
