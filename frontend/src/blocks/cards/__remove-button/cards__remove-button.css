@@ -1,4 +1,5 @@
 .cards__remove-button {
+  padding: 0;
   position: absolute;
   z-index: 1;
   background: center center no-repeat url("../../../images/remove.svg");
@@ -10,7 +11,7 @@
   cursor: pointer;
   transition: opacity 0.5s linear;
   opacity: 1;
-  visibility: visible;
+  display: block;
 }
 
 .cards__remove-button:hover {

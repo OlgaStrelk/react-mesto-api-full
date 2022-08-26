@@ -1,5 +1,6 @@
 const allowedCors = [
   'http://mesto.site.strelod.nomoredomains.sbs',
+  'https://mesto.site.strelod.nomoredomains.sbs',
   'https://api.mesto.site.strelod.nomoredomains.sbs',
   'http://localhost:3000',
 ];

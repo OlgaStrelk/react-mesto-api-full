@@ -9,23 +9,23 @@ const userSchema = new mongoose.Schema(
       type: String,
       minlength: 2,
       maxlength: 30,
-      default: 'Симон де Бовуар',
-      // default: 'Жак-Ив Кусто',
+      // default: 'Симон де Бовуар',
+      default: 'Жак-Ив Кусто',
     },
 
     about: {
       type: String,
       minlength: 2,
       maxlength: 30,
-      default: 'мыслительница',
-      // default: 'Исследователь',
+      // default: 'мыслительница',
+      default: 'Исследователь',
     },
 
     avatar: {
       type: String,
-      // default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
-      default:
-        'https://www.novochag.ru/upload/img_cache/e08/e08c959ebbe5335ba627a87fb73ce72a_ce_1042x720x56x0_cropped_666x444.jpg',
+      default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
+      // default:
+      //   'https://www.novochag.ru/upload/img_cache/e08/e08c959ebbe5335ba627a87fb73ce72a_ce_1042x720x56x0_cropped_666x444.jpg',
       validate: {
         validator(avatar) {
           return validator.isURL(avatar);
@@ -49,12 +49,12 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      validate: {
-        validator(password) {
-          return validator.isStrongPassword(password);
-        },
-        message: 'Пароль недостаточно надёжный',
-      },
+      // validate: {
+      //   validator(password) {
+      //     return validator.isStrongPassword(password);
+      //   },
+      //   message: 'Пароль недостаточно надёжный',
+      // },
       select: false,
     },
   },

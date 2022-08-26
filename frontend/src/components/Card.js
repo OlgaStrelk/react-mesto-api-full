@@ -3,6 +3,8 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Card(props) {
   const { card } = props;
+  const [ likeCounter, setLikeCounter ] = React.useState(card.likes.length)
+
   const currentUser = React.useContext(CurrentUserContext);
 
   const isOwn = card.owner === currentUser._id;
@@ -23,6 +25,7 @@ function Card(props) {
 
   const handleLikeClick = () => {
     props.onCardLike(card);
+    isLiked ? setLikeCounter(likeCounter - 1) : setLikeCounter(likeCounter + 1)
   };
 
   function handleDeleteClick() {
@@ -49,7 +52,7 @@ function Card(props) {
           aria-label="Нравится"
           onClick={handleLikeClick}
         ></button>
-        <span className="cards__like-count"></span>
+        <span className="cards__like-count">{likeCounter}</span>
       </div>
     </div>
   );

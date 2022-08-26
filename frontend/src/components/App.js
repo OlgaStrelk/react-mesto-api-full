@@ -15,7 +15,7 @@ import Login from "./Login";
 import Register from "./Register";
 import InfoTooltip from "./InfoTooltip";
 import ProtectedRoute from "./ProtectedRoute";
-import { register, authorize, checkToken } from "../utils/AuthAPI";
+import { register, authorize } from "../utils/AuthAPI";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -30,43 +30,25 @@ function App() {
   const [tooltipStatus, setTooltipStatus] = useState();
   const [email, setEmail] = useState("");
   const history = useHistory();
-  useEffect(() => {
-    console.log(cards)
-  }, [cards])
+  const [token, setToken] = useState("");
+
+  // загрузка всех данных страницы
+
   useEffect(() => {
     if (isLoggedIn) {
-      Promise.all([api.getProfile(), api.getCards()])
+      Promise.all([api.getProfile(token), api.getCards(token)])
         .then(([user, initialCards]) => {
           setCurrentUser(user.data);
           setCards(initialCards.data);
         })
-
-        .catch((err) =>
-          console.log(`При загрузке данных: ${err}`)
-        );
+        .then(setEmail(currentUser.email))
+        .catch((err) => console.log(`При загрузке данных: ${err}`));
     }
-  }, [isLoggedIn]);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      const token = localStorage.getItem("jwt");
-      if (token) {
-        checkToken(token)
-          .then((res) => {
-            setEmail(res.data.email);
-            setLoggedIn(true);
-            history.push("/");
-          })
-          .catch(() => {
-            localStorage.removeItem("jwt");
-          });
-      }
-    }
-  }, [history, isLoggedIn]);
+  }, [isLoggedIn, token]);
 
   const handleUpdateUser = (userUpdate) => {
     api
-      .editProfile(userUpdate.name, userUpdate.about)
+      .editProfile(userUpdate.name, userUpdate.about, token)
       .then((newUserData) => {
         setCurrentUser(newUserData.data);
       })
@@ -78,7 +60,7 @@ function App() {
 
   const handleUpdateAvatar = ({ avatar }) => {
     api
-      .changeUserPic(avatar)
+      .changeUserPic(avatar, token)
       .then((newAvatar) => {
         setCurrentUser(newAvatar.data);
       })
@@ -90,7 +72,7 @@ function App() {
 
   const handleAddPlaceSubmit = (name, link) => {
     api
-      .addCard(name, link)
+      .addCard(name, link, token)
       .then((newCard) => {
         setCards([newCard.data, ...cards]);
       })
@@ -121,14 +103,14 @@ function App() {
   const handleCardLike = (card) => {
     const isLiked = card.likes.some((i) => i === currentUser._id);
     api
-      .changeLikeCardStatus(card._id, !isLiked)
-      .then(newCard => {
-        setCards(state => state.map(c => c._id === card._id ? newCard.card : c));
-    })
+      .changeLikeCardStatus(card._id, !isLiked, token)
+      .then((newCard) => {
+        setCards((state) =>
+          state.map((c) => (c._id === card._id ? newCard.card : c))
+        );
+      })
       .catch((err) => console.log(`При изменении состояния лайка: ${err}`));
   };
-
-
 
   const handleCardDeleteRequest = (card) => {
     setCardDelete(card);
@@ -138,7 +120,7 @@ function App() {
   const handleCardDelete = (e) => {
     e.preventDefault();
     api
-      .deleteCard(cardDelete._id)
+      .deleteCard(cardDelete._id, token)
       .then(() => {
         setCards((state) => state.filter((c) => c._id !== cardDelete._id));
         setDeleteCardPopupOpen(false);
@@ -165,9 +147,11 @@ function App() {
 
   const onLogin = ({ email, password }) => {
     authorize(email, password)
-      .then(() => {
+      .then((token) => {
+        console.log(token)
+        setToken(token);
+        console.log(token)
         setLoggedIn(true);
-        setEmail(email);
         history.push("/");
       })
       .catch(() => {
