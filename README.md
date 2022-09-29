@@ -5,4 +5,3 @@
 
 [README BACKEND](https://github.com/OlgaStrelk/react-mesto-api-full/blob/main/backend/README.md)
 
-[Ссылка на сайт, размещенный на Яндекс.Облаке](http://mesto.site.strelod.nomoredomains.sbs/)
